@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Application.Exceptions;
 
-public class UserCreationException : AthenaException
+public class UserCreationException : BaseException
 {
     private static int _statusCode = StatusCodes.Status406NotAcceptable;
     

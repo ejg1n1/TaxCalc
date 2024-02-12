@@ -1,4 +1,6 @@
-﻿namespace Core.Entities;
+﻿using Athena.Core.Entities;
+
+namespace Core.Entities;
 
 public class Address : BaseEntity
 {

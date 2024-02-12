@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Athena.Core.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Entities;
 

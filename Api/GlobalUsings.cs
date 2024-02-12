@@ -1,6 +1,1 @@
-﻿namespace Api
-{
-    public class GlobalUsings
-    {
-    }
-}
+﻿global using Microsoft.AspNetCore.Mvc;

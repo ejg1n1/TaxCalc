@@ -1,6 +1,12 @@
-﻿namespace Api.Middleware
+﻿using Hellang.Middleware.ProblemDetails;
+
+namespace API.Middleware;
+
+public class ExtendedProblemDetail : StatusCodeProblemDetails
 {
-    public class ExtendedProblemDetail
+    public ExtendedProblemDetail(int statusCode) : base(statusCode)
     {
     }
+
+    public List<string>? Errors { get; set; }
 }

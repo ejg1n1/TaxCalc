@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Application.Exceptions;
 
-public class PatchNotAllowedException : AthenaException
+public class PatchNotAllowedException : BaseException
 {
     private static int _statusCode = StatusCodes.Status403Forbidden;
     

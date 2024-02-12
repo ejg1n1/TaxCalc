@@ -1,4 +1,6 @@
+using Athena.Core.Interfaces;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Athena.Infrastructure.Repositories;
 

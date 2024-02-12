@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Application.Exceptions;
 
-public class NotFoundException : AthenaException
+public class NotFoundException : BaseException
 {
     private static int _statusCode = StatusCodes.Status404NotFound;
 

@@ -1,3 +1,5 @@
+using Athena.Core.Entities;
+using Athena.Core.Interfaces;
 using Infrastructure.Data;
 
 namespace Athena.Infrastructure.Repositories;

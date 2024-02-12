@@ -1,7 +1,9 @@
+using Athena.Core.Interfaces;
 using Athena.Infrastructure.Repositories;
 using AutoMapper;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Infrastructure.Repositories;
@@ -23,7 +25,7 @@ public class UnitOfWork : IUnitOfWork
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         
         _usersRepository = new Lazy<IUserRepository>(() => new UserRepository(_context, _mapper), true);
-        _rolesRepository = new Lazy<IRolesRepository>(() => new RolesRepository(context, mapper), true);
+        _rolesRepository = new Lazy<IRolesRepository>(() => new RolesRepository(_context, mapper), true);
         _addressStatusRepository = new Lazy<IAddressStatusRepository>(() => new AddressStatusRepository(context, mapper), true);
         _postStatusRepository = new Lazy<IPostStatusRepository>(() => new PostStatusRepository(context, mapper), true);
         _postRepository = new Lazy<IPostRepository>(() => new PostRepository(context, mapper), true);
