@@ -9,8 +9,6 @@ public interface IUnitOfWork
     IUserRepository UserRepository { get; }
     IRolesRepository RolesRepository { get; }
     IAddressStatusRepository AddressStatusRepository { get;  }
-    IPostStatusRepository PostStatusRepository { get; }
-    IPostRepository PostRepository { get; }
 
     bool IsModified<T>(T entity);
     Task<IDbContextTransaction> BeginDataBaseTransaction();

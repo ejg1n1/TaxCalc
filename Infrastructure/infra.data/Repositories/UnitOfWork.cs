@@ -16,8 +16,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly Lazy<IUserRepository> _usersRepository;
     private readonly Lazy<IRolesRepository> _rolesRepository;
     private readonly Lazy<IAddressStatusRepository> _addressStatusRepository;
-    private readonly Lazy<IPostStatusRepository> _postStatusRepository;
-    private readonly Lazy<IPostRepository> _postRepository;
+
 
     public UnitOfWork(ApplicationDbContext context, IMapper mapper)
     {
@@ -27,15 +26,11 @@ public class UnitOfWork : IUnitOfWork
         _usersRepository = new Lazy<IUserRepository>(() => new UserRepository(_context, _mapper), true);
         _rolesRepository = new Lazy<IRolesRepository>(() => new RolesRepository(_context, mapper), true);
         _addressStatusRepository = new Lazy<IAddressStatusRepository>(() => new AddressStatusRepository(context, mapper), true);
-        _postStatusRepository = new Lazy<IPostStatusRepository>(() => new PostStatusRepository(context, mapper), true);
-        _postRepository = new Lazy<IPostRepository>(() => new PostRepository(context, mapper), true);
     }
 
     public IUserRepository UserRepository => _usersRepository.Value;
     public IRolesRepository RolesRepository => _rolesRepository.Value;
     public IAddressStatusRepository AddressStatusRepository => _addressStatusRepository.Value;
-    public IPostStatusRepository PostStatusRepository => _postStatusRepository.Value;
-    public IPostRepository PostRepository => _postRepository.Value;
     
     public bool IsModified<T>(T entity)
     {

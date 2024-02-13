@@ -9,44 +9,20 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Infrastructure.Data.Migrations
+namespace infra.data.limitlesscare_api.Infrastructure.infra.data.Data
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221223130744_AddTables2")]
-    partial class AddTables2
+    [Migration("20240213192947_DbInit")]
+    partial class DbInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.26")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("Athena.Core.Entities.Product", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Products");
-                });
 
             modelBuilder.Entity("Core.Entities.Address", b =>
                 {
@@ -352,83 +328,6 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Entities.Photos", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("Photos");
-                });
-
-            modelBuilder.Entity("Core.Entities.Post", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("PostOwnerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("PostStatusId")
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostOwnerId");
-
-                    b.HasIndex("PostStatusId");
-
-                    b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("Core.Entities.PostStatus", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PostStatuses");
-                });
-
             modelBuilder.Entity("Core.Entities.UserDetails", b =>
                 {
                     b.Property<Guid>("Id")
@@ -563,32 +462,6 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Core.Entities.Photos", b =>
-                {
-                    b.HasOne("Core.Entities.Post", "Post")
-                        .WithMany("PostImages")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("Core.Entities.Post", b =>
-                {
-                    b.HasOne("Core.Entities.ApplicationUser", "PostOwner")
-                        .WithMany()
-                        .HasForeignKey("PostOwnerId");
-
-                    b.HasOne("Core.Entities.PostStatus", "PostStatus")
-                        .WithMany()
-                        .HasForeignKey("PostStatusId");
-
-                    b.Navigation("PostOwner");
-
-                    b.Navigation("PostStatus");
-                });
-
             modelBuilder.Entity("Core.Entities.UserDetails", b =>
                 {
                     b.HasOne("Core.Entities.ApplicationUser", "DetailApplicationUser")
@@ -616,11 +489,6 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("UserAddresses");
 
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("Core.Entities.Post", b =>
-                {
-                    b.Navigation("PostImages");
                 });
 #pragma warning restore 612, 618
         }

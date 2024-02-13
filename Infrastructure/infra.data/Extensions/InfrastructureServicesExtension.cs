@@ -26,7 +26,6 @@ public static class InfrastructureServicesExtension
     {
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         serviceCollection.AddScoped<IAddressStatusService, AddressStatusService>();
-        serviceCollection.AddScoped<IPostStatusService, PostStatusService>();
         return serviceCollection;
     }
 }
