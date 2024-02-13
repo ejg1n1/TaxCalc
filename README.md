@@ -26,7 +26,7 @@ setx ASPNETCORE_ENVIRONMENT Local /M
 ##### Add migrations
 
 ```bash
-dotnet ef migrations add <migration-name> -p .\src\Infrastructure\ -s .\src\API\ -o .\Data\Migrations\
+dotnet ef migrations add <migration-name> -p .\limitlesscare_api\Infrastructure\infra.data\ -s .\limitlesscare_api\Api\ -o .\limitlesscare_api\Infrastructure\infra.data\Data\
 ```
 
 ##### Remove migrations
