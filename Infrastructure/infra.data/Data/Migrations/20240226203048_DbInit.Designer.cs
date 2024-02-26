@@ -3,17 +3,19 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace infra.data.limitlesscare_api.Infrastructure.infra.data.Data
+namespace infra.data.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240226203048_DbInit")]
+    partial class DbInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -352,6 +354,144 @@ namespace infra.data.limitlesscare_api.Infrastructure.infra.data.Data
                     b.ToTable("UserDetails");
                 });
 
+            modelBuilder.Entity("Domain.Entities.RequestModels.BookingDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookingRequestId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateOfRequest")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RequestDetail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingRequestId");
+
+                    b.ToTable("BookingDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RequestModels.BookingRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AgentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("RequestStatusId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentId");
+
+                    b.HasIndex("RequestStatusId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserBookings");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RequestModels.BookingSchedule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookingRequestId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateOfEvent")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("EventDetails")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingRequestId");
+
+                    b.ToTable("BookingSchedules");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RequestModels.BookingStatus", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookingStatuses");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RequestModels.History", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateOfRequest")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserRequestId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("History");
+                });
+
             modelBuilder.Entity("Core.Entities.Address", b =>
                 {
                     b.HasOne("Core.Entities.ApplicationUser", "User")
@@ -469,6 +609,55 @@ namespace infra.data.limitlesscare_api.Infrastructure.infra.data.Data
                     b.Navigation("DetailApplicationUser");
                 });
 
+            modelBuilder.Entity("Domain.Entities.RequestModels.BookingDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.RequestModels.BookingRequest", "BookingRequest")
+                        .WithMany("RequestDetails")
+                        .HasForeignKey("BookingRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BookingRequest");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RequestModels.BookingRequest", b =>
+                {
+                    b.HasOne("Core.Entities.ApplicationUser", "Agent")
+                        .WithMany()
+                        .HasForeignKey("AgentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.RequestModels.BookingStatus", "RequestStatus")
+                        .WithMany("BookingRequest")
+                        .HasForeignKey("RequestStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Agent");
+
+                    b.Navigation("RequestStatus");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RequestModels.BookingSchedule", b =>
+                {
+                    b.HasOne("Domain.Entities.RequestModels.BookingRequest", "BookingRequest")
+                        .WithMany("BookingSchedule")
+                        .HasForeignKey("BookingRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BookingRequest");
+                });
+
             modelBuilder.Entity("Core.Entities.ApplicationRole", b =>
                 {
                     b.Navigation("RoleClaims");
@@ -487,6 +676,18 @@ namespace infra.data.limitlesscare_api.Infrastructure.infra.data.Data
                     b.Navigation("UserAddresses");
 
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RequestModels.BookingRequest", b =>
+                {
+                    b.Navigation("BookingSchedule");
+
+                    b.Navigation("RequestDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RequestModels.BookingStatus", b =>
+                {
+                    b.Navigation("BookingRequest");
                 });
 #pragma warning restore 612, 618
         }

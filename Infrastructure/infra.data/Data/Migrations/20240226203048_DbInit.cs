@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace infra.data.limitlesscare_api.Infrastructure.infra.data.Data
+namespace infra.data.Data.Migrations
 {
     public partial class DbInit : Migration
     {
@@ -63,6 +63,36 @@ namespace infra.data.limitlesscare_api.Infrastructure.infra.data.Data
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookingStatuses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Description = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingStatuses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "History",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserRequestId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DateOfRequest = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_History", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,6 +288,84 @@ namespace infra.data.limitlesscare_api.Infrastructure.infra.data.Data
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserBookings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AgentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RequestStatusId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserBookings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserBookings_AspNetUsers_AgentId",
+                        column: x => x.AgentId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserBookings_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserBookings_BookingStatuses_RequestStatusId",
+                        column: x => x.RequestStatusId,
+                        principalTable: "BookingStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookingDetails",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    DateOfRequest = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RequestDetail = table.Column<string>(type: "text", nullable: false),
+                    BookingRequestId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookingDetails_UserBookings_BookingRequestId",
+                        column: x => x.BookingRequestId,
+                        principalTable: "UserBookings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookingSchedules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    EventDetails = table.Column<string>(type: "text", nullable: false),
+                    DateOfEvent = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    BookingRequestId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingSchedules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookingSchedules_UserBookings_BookingRequestId",
+                        column: x => x.BookingRequestId,
+                        principalTable: "UserBookings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_UserId",
                 table: "Addresses",
@@ -331,6 +439,31 @@ namespace infra.data.limitlesscare_api.Infrastructure.infra.data.Data
                 column: "UserId1");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BookingDetails_BookingRequestId",
+                table: "BookingDetails",
+                column: "BookingRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookingSchedules_BookingRequestId",
+                table: "BookingSchedules",
+                column: "BookingRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserBookings_AgentId",
+                table: "UserBookings",
+                column: "AgentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserBookings_RequestStatusId",
+                table: "UserBookings",
+                column: "RequestStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserBookings_UserId",
+                table: "UserBookings",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserDetails_DetailApplicationUserId",
                 table: "UserDetails",
                 column: "DetailApplicationUserId");
@@ -360,13 +493,28 @@ namespace infra.data.limitlesscare_api.Infrastructure.infra.data.Data
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BookingDetails");
+
+            migrationBuilder.DropTable(
+                name: "BookingSchedules");
+
+            migrationBuilder.DropTable(
+                name: "History");
+
+            migrationBuilder.DropTable(
                 name: "UserDetails");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "UserBookings");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "BookingStatuses");
         }
     }
 }
