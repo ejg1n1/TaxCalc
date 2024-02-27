@@ -23,7 +23,7 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<BookingStatus> BookingStatuses { get; set; } = default!;
     public DbSet<BookingType> BookingTypes { get; set; } = default!;
     public DbSet<History> History { get; set; } = default!;
-    public DbSet<BookingRequest> BookingRequests { get; set; } = default!;
+    public DbSet<Booking> Booking { get; set; } = default!;
 
 
     public DbSet<UserDetails> UserDetails { get; set; } = default!;

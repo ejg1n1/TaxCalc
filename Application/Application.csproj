@@ -9,11 +9,8 @@
     <ItemGroup>
       <Folder Include="Configuration\" />
       <Folder Include="Extensions\" />
-      <Folder Include="Interfaces\" />
       <Folder Include="Ioc\" />
       <Folder Include="Mappings\" />
-      <Folder Include="Models\" />
-      <Folder Include="Services\" />
     </ItemGroup>
 
     <ItemGroup>

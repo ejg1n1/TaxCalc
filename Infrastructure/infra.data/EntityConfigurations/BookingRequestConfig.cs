@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace infra.data.EntityConfigurations
 {
-    public class BookingRequestConfig : IEntityTypeConfiguration<BookingRequest>
+    public class BookingConfig : IEntityTypeConfiguration<Booking>
     {
-        public void Configure(EntityTypeBuilder<BookingRequest> builder)
+        public void Configure(EntityTypeBuilder<Booking> builder)
         {
             //Primary Key
             builder.HasKey(t => t.Id);
@@ -21,29 +21,29 @@ namespace infra.data.EntityConfigurations
             builder.HasIndex(t => t.Agent.Id).HasDatabaseName("BookingUserId");
 
             //Map table name
-            builder.ToTable("BookingRequest");
+            builder.ToTable("Booking");
 
             //Limit table sizes
             builder.HasMany(p => p.RequestDetails)
-                .WithOne(c => c.BookingRequest)
-                .HasForeignKey(c => c.BookingRequestId)
+                .WithOne(c => c.Booking)
+                .HasForeignKey(c => c.BookingId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(p => p.BookingSchedule)
-                .WithOne(c => c.BookingRequest)
-                .HasForeignKey(c => c.BookingRequestId)
+                .WithOne(c => c.Booking)
+                .HasForeignKey(c => c.BookingId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(p => p.RequestStatus)
-                .WithMany(s => s.BookingRequest)
+                .WithMany(s => s.Booking)
                 .HasForeignKey(p => p.RequestStatus.Id);
 
             builder.HasOne(p => p.RequestStatus)
-                .WithMany(s => s.BookingRequest)
+                .WithMany(s => s.Booking)
                 .HasForeignKey(p => p.RequestStatus.Id);
 
             builder.HasOne(p => p.RequestType)
-                .WithMany(s => s.BookingRequest)
+                .WithMany(s => s.Booking)
                 .HasForeignKey(p => p.RequestType.Id);
         }
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities.RequestModels
 {
-    public class BookingRequest : BaseEntity
+    public class Booking: BaseEntity
     {
         public virtual ApplicationUser User { get; set; }
 

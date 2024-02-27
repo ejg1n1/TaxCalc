@@ -24,7 +24,7 @@ namespace infra.data.EntityConfigurations
             //Table limitations / sizes
 
             //Entity relationships
-            builder.HasMany(s => s.BookingRequest)
+            builder.HasMany(s => s.Booking)
                 .WithOne(p => p.RequestStatus)
                 .HasForeignKey(s => s.RequestStatus.Id);
 

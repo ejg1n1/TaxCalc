@@ -12,7 +12,7 @@ namespace Domain.Entities.RequestModels
         public string EventDetails { get; set; } = String.Empty;
         public DateTime DateOfEvent { get; set; }
 
-        public Guid BookingRequestId { get; set; }
-        public virtual BookingRequest BookingRequest { get; set; }
+        public Guid BookingId { get; set; }
+        public virtual Booking Booking { get; set; }
     }
 }

@@ -358,7 +358,7 @@ namespace infra.data.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BookingRequestId")
+                    b.Property<Guid>("BookingId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
@@ -376,12 +376,12 @@ namespace infra.data.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookingRequestId");
+                    b.HasIndex("BookingId");
 
                     b.ToTable("BookingDetails");
                 });
 
-            modelBuilder.Entity("Domain.Entities.RequestModels.BookingRequest", b =>
+            modelBuilder.Entity("Domain.Entities.RequestModels.Booking", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -419,7 +419,7 @@ namespace infra.data.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BookingRequestId")
+                    b.Property<Guid>("BookingId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
@@ -437,7 +437,7 @@ namespace infra.data.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookingRequestId");
+                    b.HasIndex("BookingId");
 
                     b.ToTable("BookingSchedules");
                 });
@@ -609,16 +609,16 @@ namespace infra.data.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.RequestModels.BookingDetails", b =>
                 {
-                    b.HasOne("Domain.Entities.RequestModels.BookingRequest", "BookingRequest")
+                    b.HasOne("Domain.Entities.RequestModels.Booking", "Booking")
                         .WithMany("RequestDetails")
-                        .HasForeignKey("BookingRequestId")
+                        .HasForeignKey("BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("BookingRequest");
+                    b.Navigation("Booking");
                 });
 
-            modelBuilder.Entity("Domain.Entities.RequestModels.BookingRequest", b =>
+            modelBuilder.Entity("Domain.Entities.RequestModels.Booking", b =>
                 {
                     b.HasOne("Core.Entities.ApplicationUser", "Agent")
                         .WithMany()
@@ -627,7 +627,7 @@ namespace infra.data.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.RequestModels.BookingStatus", "RequestStatus")
-                        .WithMany("BookingRequest")
+                        .WithMany("Booking")
                         .HasForeignKey("RequestStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -647,13 +647,13 @@ namespace infra.data.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.RequestModels.BookingSchedule", b =>
                 {
-                    b.HasOne("Domain.Entities.RequestModels.BookingRequest", "BookingRequest")
+                    b.HasOne("Domain.Entities.RequestModels.Booking", "Booking")
                         .WithMany("BookingSchedule")
-                        .HasForeignKey("BookingRequestId")
+                        .HasForeignKey("BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("BookingRequest");
+                    b.Navigation("Booking");
                 });
 
             modelBuilder.Entity("Core.Entities.ApplicationRole", b =>
@@ -676,7 +676,7 @@ namespace infra.data.Data.Migrations
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("Domain.Entities.RequestModels.BookingRequest", b =>
+            modelBuilder.Entity("Domain.Entities.RequestModels.Booking", b =>
                 {
                     b.Navigation("BookingSchedule");
 
@@ -685,7 +685,7 @@ namespace infra.data.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.RequestModels.BookingStatus", b =>
                 {
-                    b.Navigation("BookingRequest");
+                    b.Navigation("Booking");
                 });
 #pragma warning restore 612, 618
         }

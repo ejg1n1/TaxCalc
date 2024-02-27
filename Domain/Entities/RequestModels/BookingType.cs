@@ -13,6 +13,6 @@ namespace Domain.Entities.RequestModels
         [MaxLength(50)]
         public string Description { get; set; } = String.Empty;
 
-        public virtual ICollection<BookingRequest> BookingRequest { get; set; }
+        public virtual ICollection<Booking> Booking { get; set; }
     }
 }

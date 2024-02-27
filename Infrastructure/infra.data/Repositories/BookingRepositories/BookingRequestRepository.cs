@@ -12,33 +12,33 @@ using System.Threading.Tasks;
 
 namespace infra.data.Repositories.BookingRepositories
 {
-    public class BookingRequestRepository : Repository<BookingRequest>, IBookingRequestRepository
+    public class BookingRepository : Repository<Booking>, IBookingRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public BookingRequestRepository(ApplicationDbContext context) : base(context)
+        public BookingRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
 
-        public async Task<List<BookingRequest?>> QueryAllByAgentIdNoTracking(Guid agentId)
+        public async Task<List<Booking?>> QueryAllByAgentIdNoTracking(Guid agentId)
         {
-            return await _context.BookingRequests.Where(e => e.Agent.Id == agentId).AsNoTracking().ToListAsync();
+            return await _context.Bookings.Where(e => e.Agent.Id == agentId).AsNoTracking().ToListAsync();
         }
 
-        public async Task<List<BookingRequest?>> QueryAllByStatus(Guid statusId)
+        public async Task<List<Booking?>> QueryAllByStatus(Guid statusId)
         {
-            return await _context.BookingRequests.Where(e => e.RequestStatus.Id == statusId).AsNoTracking().ToListAsync();
+            return await _context.Bookings.Where(e => e.RequestStatus.Id == statusId).AsNoTracking().ToListAsync();
         }
 
-        public async Task<List<BookingRequest?>> QueryAllByType(Guid typeId)
+        public async Task<List<Booking?>> QueryAllByType(Guid typeId)
         {
-            return await _context.BookingRequests.Where(e => e.RequestType.Id == typeId).AsNoTracking().ToListAsync();
+            return await _context.Bookings.Where(e => e.RequestType.Id == typeId).AsNoTracking().ToListAsync();
         }
 
-        public async Task<List<BookingRequest?>> QueryAllByUserIdNoTracking(Guid userId)
+        public async Task<List<Booking?>> QueryAllByUserIdNoTracking(Guid userId)
         {
-            return await _context.BookingRequests.Where(e => e.User.Id == userId).AsNoTracking().ToListAsync();
+            return await _context.Bookings.Where(e => e.User.Id == userId).AsNoTracking().ToListAsync();
         }
 
     }

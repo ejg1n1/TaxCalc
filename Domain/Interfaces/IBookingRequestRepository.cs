@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IBookingRequestRepository : IRepository<BookingRequest>
+    public interface IBookingRepository : IRepository<Booking>
     {
-        Task<List<BookingRequest?>> QueryAllByUserIdNoTracking(Guid userId);
-        Task<List<BookingRequest?>> QueryAllByAgentIdNoTracking(Guid agentId);
+        Task<List<Booking?>> QueryAllByUserIdNoTracking(Guid userId);
+        Task<List<Booking?>> QueryAllByAgentIdNoTracking(Guid agentId);
 
-        Task<List<BookingRequest?>> QueryAllByStatus(Guid statusId);
-        Task<List<BookingRequest?>> QueryAllByType(Guid typeId);
+        Task<List<Booking?>> QueryAllByStatus(Guid statusId);
+        Task<List<Booking?>> QueryAllByType(Guid typeId);
     }
 }
