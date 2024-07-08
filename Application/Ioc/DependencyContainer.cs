@@ -13,6 +13,7 @@ public static class DependencyContainer
         services.AddLazyCache();
 
         services.AddScoped<IRolesService, RoleService>();
+        services.AddScoped<IReceiptService, ReceiptService>();
         services.AddScoped<IGlobalConstants, GlobalConstantsService>();
         services.AddScoped<IUserService, UserService>();
         return services;
