@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers
+namespace Api.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class BaseController : ControllerBase
 {
-    public class BaseController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
-    }
 }

@@ -1,7 +1,7 @@
 ﻿using Athena.Core.Interfaces;
 using AutoMapper;
 using Core.Entities;
-using Infrastructure.Data;
+using infra.data.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena.Infrastructure.Repositories;

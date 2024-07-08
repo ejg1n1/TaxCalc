@@ -1,5 +1,5 @@
 using Athena.Core.Interfaces;
-using Infrastructure.Data;
+using infra.data.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena.Infrastructure.Repositories;

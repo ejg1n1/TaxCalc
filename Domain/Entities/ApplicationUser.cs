@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Core.Entities;
-using Domain.Entities.RequestModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace Core.Entities;

@@ -2,7 +2,7 @@ using Athena.Core.Interfaces;
 using Athena.Infrastructure.Repositories;
 using AutoMapper;
 using Core.Interfaces;
-using Infrastructure.Data;
+using infra.data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -15,8 +15,6 @@ public class UnitOfWork : IUnitOfWork
     
     private readonly Lazy<IUserRepository> _usersRepository;
     private readonly Lazy<IRolesRepository> _rolesRepository;
-    private readonly Lazy<IAddressStatusRepository> _addressStatusRepository;
-
 
     public UnitOfWork(ApplicationDbContext context, IMapper mapper)
     {
@@ -25,12 +23,10 @@ public class UnitOfWork : IUnitOfWork
         
         _usersRepository = new Lazy<IUserRepository>(() => new UserRepository(_context, _mapper), true);
         _rolesRepository = new Lazy<IRolesRepository>(() => new RolesRepository(_context, mapper), true);
-        _addressStatusRepository = new Lazy<IAddressStatusRepository>(() => new AddressStatusRepository(context, mapper), true);
     }
 
     public IUserRepository UserRepository => _usersRepository.Value;
     public IRolesRepository RolesRepository => _rolesRepository.Value;
-    public IAddressStatusRepository AddressStatusRepository => _addressStatusRepository.Value;
     
     public bool IsModified<T>(T entity)
     {

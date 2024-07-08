@@ -32,11 +32,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="SwaggerSchemas\" />
-      <Folder Include="Validators\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Infrastructure\infra.ioc\infra.ioc.csproj" />
     </ItemGroup>

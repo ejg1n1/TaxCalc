@@ -14,7 +14,6 @@ using Hangfire.PostgreSql;
 using HangfireBasicAuthenticationFilter;
 using Hellang.Middleware.ProblemDetails;
 using Hellang.Middleware.ProblemDetails.Mvc;
-using Infrastructure.Data;
 using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +24,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Api.Extensions;
 using System.ComponentModel.DataAnnotations;
+using infra.data.Data;
 
 const string DEVELOPMENT_CORS_POLICY = "DevelopmentCorsPolicy";
 
@@ -93,8 +93,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = "Athena",
-            ValidAudience = "Athena",
+            ValidIssuer = "TaxCalc",
+            ValidAudience = "TaxCalc",
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationOptions.Secret))
         };
     });
@@ -195,7 +195,7 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
 {
     Authorization = new[]
     {
-        new HangfireCustomBasicAuthenticationFilter { User = "AthanAdmin", Pass = "E3noWPK5y8$Hz9%u"}
+        new HangfireCustomBasicAuthenticationFilter { User = "TaxCalcAdmin", Pass = "E3noWPK5y8$Hz9%u"}
     }
 });
 
