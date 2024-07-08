@@ -37,10 +37,10 @@ public static class ApiServicesExtension
             options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Version = "v1",
-                Title = "Athena API",
-                Description = "A .NET 6 API for the Athena solution"
+                Title = "TaxCalc API",
+                Description = "A .NET 6 API for the TaxCalc solution"
             });
-            options.IncludeXmlComments(xmlFilePath);
+            // options.IncludeXmlComments(xmlFilePath);
 
         });
         return serviceCollection;

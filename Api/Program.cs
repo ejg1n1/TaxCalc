@@ -199,8 +199,6 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
     }
 });
 
-//app.UseRecurringJobs();
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
