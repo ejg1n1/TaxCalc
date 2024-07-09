@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using Application.Models.REST.Request;
 using Application.Models.REST.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -17,6 +18,7 @@ public class SalesTaxesController : BaseController
         _receiptService = receiptService;
     }
 
+    [AllowAnonymous]
     [HttpPost("generateReceipt")]
     public ActionResult<ReceiptResponse> GenerateReceipt([FromBody] List<ItemRequest> items)
     {
